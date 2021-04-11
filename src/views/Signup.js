@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from "react";
 import React from "react";
+import { CORS_SERVER, API } from "../config";
 import {
   Container,
   Form,
@@ -9,122 +10,132 @@ import {
   Nav,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faCheck, faUser, faAt } from "@fortawesome/free-solid-svg-icons";
-
-
+import { faLock, faCheck, faUser } from "@fortawesome/free-solid-svg-icons";
+import { Context } from "../context";
+import { useHistory, Link } from "react-router-dom";
 export default function Signup() {
-  const [error, setError] = useState()
+  const [error, setError] = useState("");
+  const history = useHistory();
   const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
+  const context = useContext(Context);
 
-  async function fetchData() {
-       const res = await fetch('http://localhost:6942/signup', {
-         method:'POST',
-         data:{
-           name:"hi g",
-           username:"no g"
-         }
-       })
-       const data = await res.json()
-       console.log(data)
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (data.password !== data.confirmPassword) {
+      return alert(
+        "Please make sure the password and re-enter password fields match."
+      );
+    }
+    fetch(`${API}signup?email=${data.email}&password=${data.password}`)
+      .then((res) => res.json())
+      .then((data) => {
+        context.loginUser(data);
+        history.push("/dashboard");
+      })
+      .catch((err) => console.log(err));
   }
-    useEffect(() =>{
-      fetchData()
-    },[])
-    return (
-      <Container
-        className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "90vh", marginTop: "25px", marginBottom: "25px" }}
-      >
-        <div className="w-100" style={{ maxWidth: "400px" }}>
-          <Card className="form-card shadow-xl" id="hospital">
-            <Card.Body>
-              <h3 className="text-center">Patient Sign Up</h3>
-              <Form>
-                <Form.Group controlId="formBasicName">
-                  <Form.Label>Name</Form.Label>
-                  <InputGroup className="mr-2">
-                    <InputGroup.Prepend>
-                      <InputGroup.Text>
-                        <FontAwesomeIcon icon={faUser} />
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                      type="text"
-                      // value={fname}
-                      placeholder="First Name"
-                      // onChange={(e) => setFName(e.target.value)}
-                      required
-                    />
-                  </InputGroup>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Email Address</Form.Label>
-                  <InputGroup>
-                    <InputGroup.Prepend>
-                      <InputGroup.Text>
-                        <FontAwesomeIcon icon={faAt} />
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                      type="email"
-                      placeholder="Email address"
-                      // value={email}
-                      // onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </InputGroup>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Password</Form.Label>
-                  <InputGroup>
-                    <InputGroup.Prepend>
-                      <InputGroup.Text>
-                        <FontAwesomeIcon icon={faLock} />
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                      type="password"
-                      placeholder="Enter password"
-                      // value={password}
-                      // onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                  </InputGroup>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Confirm Password</Form.Label>
-                  <InputGroup>
-                    <InputGroup.Prepend>
-                      <InputGroup.Text>
-                        <FontAwesomeIcon icon={faCheck} />
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                      type="password"
-                      placeholder="Re-enter password"
-                      // value={confirmPassword}
-                      // onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                    />
-                  </InputGroup>
-                </Form.Group>
-                <p className="text-danger">{error && error}</p>
-                <Button
-                  type="submit"
-                  className="w-100 text-center shadow-sm"
-                >
-                  Sign Up
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        
+  return (
+    <Container
+      className="d-flex align-items-center justify-content-center"
+      style={{
+        minHeight: "calc(100vh - 56px)",
+        marginTop: "auto",
+        marginBottom: "auto",
+      }}
+    >
+      <div className="w-100" style={{ maxWidth: "400px" }}>
+        <Card className="form-card shadow-xl" id="hospital">
+          <Card.Body>
+            <h3 className="text-center">Sign Up</h3>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group>
+                <Form.Label>Email Address</Form.Label>
+                <InputGroup>
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>
+                      <FontAwesomeIcon icon={faUser} />
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email address"
+                    value={data.email}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        email: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </InputGroup>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Password</Form.Label>
+                <InputGroup>
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>
+                      <FontAwesomeIcon icon={faLock} />
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <Form.Control
+                    type="password"
+                    placeholder="Enter password"
+                    value={data.password}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        password: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </InputGroup>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Confirm Password</Form.Label>
+                <InputGroup>
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>
+                      <FontAwesomeIcon icon={faCheck} />
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <Form.Control
+                    type="password"
+                    placeholder="Re-enter password"
+                    value={data.confirmPassword}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        confirmPassword: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </InputGroup>
+              </Form.Group>
+              <p className="text-danger">{error && error}</p>
+              <Button
+                onClick={handleSubmit}
+                type="submit"
+                className="w-100 text-center shadow-sm"
+              >
+                Sign Up
+              </Button>
+            </Form>
+            <p className="text-center mt-3 mb-0">
+              Already have an account?{" "}
+              <Link to="/login" className="text-danger">
+                <b>Log In</b>
+              </Link>
+            </p>
+          </Card.Body>
+        </Card>
       </div>
-      </Container>
-    )
+    </Container>
+  );
 }

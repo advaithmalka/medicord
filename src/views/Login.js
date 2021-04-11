@@ -1,65 +1,116 @@
-import React, { useState } from 'react'
-import "../css/Form.css";
-import { Button, Alert, Container } from 'react-bootstrap';
-import { useAuth } from "../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
-import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome'
-import { faDog } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useState, useContext } from "react";
+import React from "react";
+import { CORS_SERVER, API } from "../config";
+import { Context } from "../context";
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import {
+  Container,
+  Form,
+  Button,
+  Card,
+  InputGroup,
+  Nav,
+} from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const { login } = useAuth();
-    const [loading, setLoading] = useState(false);
-    const history = useHistory();
-
-    async function handleSubmit(e) {
-        e.preventDefault();
-
-        try {
-            setError("")
-            setLoading(true)
-            await login(email, password)
-            history.push("/dashboard")
-        } catch {
-            setError('There was an error signing in.')
-        }
+  const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const context = useContext(Context);
+  const history = useHistory();
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    fetch(`${API}login?email=${email}&password=${password}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
         setLoading(false);
-    }
+        switch (data.error) {
+          case "INVALID_PASSWORD":
+            return alert(`Error: Invalid password!`);
+          case "NOT_FOUND":
+            return alert(`Error: User does not exist!`);
+        }
 
-    return (
-        <>
-        <div className="login">
-        <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
-        <div className="w-100" style={{maxWidth: "400px"}}>
-        <Link id="titlelink" to="/"><h1 id="title" className="mb-2">TaskBuddy <Icon icon={faDog} /></h1></Link>
-            <div className="form-card card form-shadow">
-                <div className="card-body">
-                    <h2 className="text-center">Login</h2>
-                    {error && <Alert variant="danger">{error}</Alert>}
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="email">Email:</label>
-                            <input type="email" id="email" className="form-control" onChange={e => setEmail(e.target.value)} value={email} required/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password:</label>
-                            <input type="password" id="password" className="form-control" onChange={e => setPassword(e.target.value)} value={password} required/>
-                        </div>
-                        <Button disabled={loading} className="btn btn-primary w-100" type="submit">Login</Button>
-                    </form>
-                    <div className="w-100 text-center mt-3">
-                      <Link to="/forgot-password">Forgot Password?</Link>
-                    </div>
-                </div>
-            </div>
-            <div className="w-100 text-center mt-2 log-in">
-                Don't have an account? <Link to="/signup" style={{color: "#fff"}}>Sign Up</Link>
-            </div>
-            </div>
-        </Container>
-        </div>
-        </>
-    )
+        context.loginUser(data);
+        history.push("/dashboard");
+      });
+  }
+
+  return (
+    <Container
+      className="d-flex align-items-center justify-content-center"
+      style={{
+        minHeight: "calc(100vh - 56px)",
+        marginTop: "auto",
+        marginBottom: "auto",
+      }}
+    >
+      <div className="w-100" style={{ maxWidth: "400px" }}>
+        <Card className="form-card shadow-xl" id="hospital">
+          <Card.Body>
+            <h3 className="text-center">Log In</h3>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group>
+                <Form.Label>Email Address</Form.Label>
+                <InputGroup>
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>
+                      <FontAwesomeIcon icon={faUser} />
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </InputGroup>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Password</Form.Label>
+                <InputGroup>
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>
+                      <FontAwesomeIcon icon={faLock} />
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <Form.Control
+                    type="password"
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </InputGroup>
+              </Form.Group>
+              <p className="text-danger">{error && error}</p>
+              <Button
+                type="submit"
+                className="w-100 text-center shadow-sm mt-1 mb-1"
+              >
+                {loading ? (
+                  <div className="lit-spinner text-center mx-auto"></div>
+                ) : (
+                  "Log In"
+                )}
+              </Button>
+            </Form>
+            <p className="text-center mt-2 mb-0">
+              Need an account?{" "}
+              <Link to="/signup" className="text-danger font-bold">
+                Sign Up
+              </Link>
+            </p>
+          </Card.Body>
+        </Card>
+      </div>
+    </Container>
+  );
 }
