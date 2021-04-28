@@ -13,7 +13,7 @@ function App() {
   fetch(`${API}`);
   return (
     <ContextProvider>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <NavbarComponent />
         <Switch>
           <PrivateRoute path="/dashboard" exact component={Dash} />
