@@ -30,13 +30,23 @@ export default function Signup() {
         "Please make sure the password and re-enter password fields match."
       );
     }
-    fetch(`${API}signup?email=${data.email}&password=${data.password}`)
-      .then((res) => res.json())
-      .then((data) => {
+    const params = {
+      email: data.email,
+      password: data.password,
+    };
+    fetch(`${API}signup`, {
+      method: "POST",
+      body: JSON.stringify(params),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
         context.loginUser(data);
         history.push("/dashboard");
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }
   return (
     <Container
@@ -64,7 +74,7 @@ export default function Signup() {
                     type="email"
                     placeholder="Email address"
                     value={data.email}
-                    onChange={(e) =>
+                    onChange={e =>
                       setData({
                         ...data,
                         email: e.target.value,
@@ -86,7 +96,7 @@ export default function Signup() {
                     type="password"
                     placeholder="Enter password"
                     value={data.password}
-                    onChange={(e) =>
+                    onChange={e =>
                       setData({
                         ...data,
                         password: e.target.value,
@@ -108,7 +118,7 @@ export default function Signup() {
                     type="password"
                     placeholder="Re-enter password"
                     value={data.confirmPassword}
-                    onChange={(e) =>
+                    onChange={e =>
                       setData({
                         ...data,
                         confirmPassword: e.target.value,

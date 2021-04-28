@@ -25,9 +25,19 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    fetch(`${API}login?email=${email}&password=${password}`)
-      .then((res) => res.json())
-      .then((data) => {
+    const params = {
+      email,
+      password,
+    };
+    fetch(`${API}login`, {
+      method: "POST",
+      body: JSON.stringify(params),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
         console.log(data);
         setLoading(false);
         switch (data.error) {
@@ -68,7 +78,7 @@ export default function Login() {
                     type="email"
                     placeholder="Email address"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                     required
                   />
                 </InputGroup>
@@ -85,7 +95,7 @@ export default function Login() {
                     type="password"
                     placeholder="Enter password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value)}
                     required
                   />
                 </InputGroup>

@@ -8,8 +8,9 @@ import AddRecording from "./views/AddRecording";
 import PrivateRoute from "./components/PrivateRoute";
 import { ContextProvider } from "./context";
 import "tippy.js/dist/tippy.css";
-
+import { API } from "./config";
 function App() {
+  fetch(`${API}`);
   return (
     <ContextProvider>
       <Router>

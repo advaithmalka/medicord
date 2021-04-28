@@ -18,7 +18,7 @@ function AddRecording() {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [percent, setPercent] = useState(40);
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (file) {
       const storageRef = firerage
@@ -28,14 +28,21 @@ function AddRecording() {
       storageRef.on("on", async () => {
         setLoading(true);
         const url = await storageRef.snapshot.ref.getDownloadURL();
-
-        await axios
-          .get(
-            `${API}upload?url=${url}&id=${
-              getUser().id
-            }&title=${title}&percent=${Math.ceil(percent)}`
-          )
-          .then((data) => {
+        const params = {
+          url,
+          id: getUser().id,
+          title,
+          percent: Math.ceil(percent),
+        };
+        fetch(`${API}upload`, {
+          method: "POST",
+          body: JSON.stringify(params),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then(res => res.json())
+          .then(data => {
             console.log(data);
             setLoading(false);
             history.push("/dashboard");
@@ -62,7 +69,7 @@ function AddRecording() {
               type="text"
               placeholder="Enter a title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={e => setTitle(e.target.value)}
               required
             />
           </InputGroup>
@@ -74,7 +81,7 @@ function AddRecording() {
               type="number"
               placeholder={"ex. 50"}
               value={percent}
-              onChange={(e) => setPercent(e.target.value)}
+              onChange={e => setPercent(e.target.value)}
               required
             />
           </InputGroup>
@@ -82,7 +89,7 @@ function AddRecording() {
         <Form.Label>File</Form.Label>
         <div className="custom-file">
           <input
-            onChange={(e) => {
+            onChange={e => {
               setFile(e.target.files[0]);
             }}
             type="file"

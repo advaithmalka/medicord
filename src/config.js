@@ -1,5 +1,5 @@
-export const CORS_SERVER = "http://localhost:8080/";
-export const API = "http://localhost:6942/";
+export const CORS_SERVER = "https://lit-cors.herokuapp.com/";
+export const API = "https://medicord-server.herokuapp.com/";
 
 export const FIREBASE_CONFIG = {
   apiKey: "AIzaSyA4Vn7ZUph5YNxjkjXz7A2LeP12MW2ix6I",
