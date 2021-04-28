@@ -1,17 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import React from "react";
-import { CORS_SERVER, API } from "../config";
+import { API } from "../config";
 import { Context } from "../context";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-import {
-  Container,
-  Form,
-  Button,
-  Card,
-  InputGroup,
-  Nav,
-} from "react-bootstrap";
+import { Container, Form, Button, Card, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 

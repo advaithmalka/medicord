@@ -1,13 +1,8 @@
-import { useState, useEffect, useContext } from "react";
-import { Container, Button, Form, InputGroup } from "react-bootstrap";
+import { useState } from "react";
+import { Container, Form, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon as Icon } from "@fortawesome/react-fontawesome";
-import {
-  faLock,
-  faUser,
-  faChevronLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { API } from "../config";
-import axios from "axios";
 import getUser from "../getUser";
 import { firerage } from "../firebase";
 import { useHistory, Link } from "react-router-dom";
