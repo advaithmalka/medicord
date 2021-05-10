@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../context";
-import { Card, Container, Nav } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import getUser from "../getUser";
 import { Link } from "react-router-dom";
-import { CORS_SERVER, API } from "../config";
-import Loader from "../assets/loader.svg";
+import { API } from "../config";
 import Session from "../components/Session";
 function Dash() {
   const context = useContext(Context);

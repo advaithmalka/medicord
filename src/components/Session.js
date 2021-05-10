@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Card, Container, Nav, Modal } from "react-bootstrap";
+import { Card, Modal } from "react-bootstrap";
 import moment from "moment";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import ReadMoreReact from "read-more-react";
