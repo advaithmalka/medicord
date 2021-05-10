@@ -17,7 +17,7 @@ function Dash() {
     setData(dad);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     setUser(getUser());
     getTranscriptions();
   }, [context.user]);
@@ -25,7 +25,7 @@ function Dash() {
     <Container>
       <h1 className="mt-20 text-center mb-8">
         Welcome{user && user ? ", " : ""}
-        <span className="text-red-500 font-semibold">
+        <span className="text-3xl text-red-500 font-semibold">
           {user.email ? user.email.split("@")[0] : ""}
         </span>
         .
@@ -51,9 +51,6 @@ function Dash() {
         {!data ? (
           <div className="text-center">
             <img
-              // src="https://miro.medium.com/max/1284/0*mv8MNRLDNNnt5f72.gif"
-              // src="https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-6d0b072c3d3f.gif"
-              // src="https://thumbs.gfycat.com/UniformDiscreteKissingbug-max-1mb.gif"
               src="https://icg.llc/Content/img/loading.gif"
               alt="Loader"
               className="text-center mr-auto ml-auto mt-2"
@@ -61,12 +58,6 @@ function Dash() {
           </div>
         ) : (
           data.map((data, idx) => (
-            // <Card key={idx} className="shadow-md border-none mb-4 bg-gray-500">
-            //   <Card.Body>
-            //     <h4>{data.title}</h4>
-            //     <h5 className="text-md mb-0">{data.date}</h5>
-            //   </Card.Body>
-            // </Card>
             <Session
               data={{
                 ...data,

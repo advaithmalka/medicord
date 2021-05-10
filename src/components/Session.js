@@ -15,7 +15,7 @@ function Session({ data }) {
 
   return (
     <div>
-      <Card key={data.idx} className="shadow-md border-none mb-4 bg-gray-500">
+      <Card key={data.idx} className="shadow-md border-none mb-4">
         <Card.Body>
           {/* nithil was here */}
           <div className="block overflow-hidden text-center">
