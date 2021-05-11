@@ -1,25 +1,24 @@
 {
   "files": {
-    "main.css": "/medicord/static/css/main.04913dba.chunk.css",
-    "main.js": "/medicord/static/js/main.5c2d7977.chunk.js",
-    "main.js.map": "/medicord/static/js/main.5c2d7977.chunk.js.map",
+    "main.css": "/medicord/static/css/main.b2f23716.chunk.css",
+    "main.js": "/medicord/static/js/main.f1b15305.chunk.js",
+    "main.js.map": "/medicord/static/js/main.f1b15305.chunk.js.map",
     "runtime-main.js": "/medicord/static/js/runtime-main.4d7ed787.js",
     "runtime-main.js.map": "/medicord/static/js/runtime-main.4d7ed787.js.map",
     "static/css/2.0476b0b1.chunk.css": "/medicord/static/css/2.0476b0b1.chunk.css",
-    "static/js/2.b1445e9a.chunk.js": "/medicord/static/js/2.b1445e9a.chunk.js",
-    "static/js/2.b1445e9a.chunk.js.map": "/medicord/static/js/2.b1445e9a.chunk.js.map",
+    "static/js/2.8906cbdd.chunk.js": "/medicord/static/js/2.8906cbdd.chunk.js",
+    "static/js/2.8906cbdd.chunk.js.map": "/medicord/static/js/2.8906cbdd.chunk.js.map",
     "index.html": "/medicord/index.html",
     "static/css/2.0476b0b1.chunk.css.map": "/medicord/static/css/2.0476b0b1.chunk.css.map",
-    "static/css/main.04913dba.chunk.css.map": "/medicord/static/css/main.04913dba.chunk.css.map",
-    "static/js/2.b1445e9a.chunk.js.LICENSE.txt": "/medicord/static/js/2.b1445e9a.chunk.js.LICENSE.txt",
-    "static/media/loader.3a8099c8.svg": "/medicord/static/media/loader.3a8099c8.svg",
+    "static/css/main.b2f23716.chunk.css.map": "/medicord/static/css/main.b2f23716.chunk.css.map",
+    "static/js/2.8906cbdd.chunk.js.LICENSE.txt": "/medicord/static/js/2.8906cbdd.chunk.js.LICENSE.txt",
     "static/media/index.scss": "/medicord/static/media/wallpaper.8d6dd915.png"
   },
   "entrypoints": [
     "static/js/runtime-main.4d7ed787.js",
     "static/css/2.0476b0b1.chunk.css",
-    "static/js/2.b1445e9a.chunk.js",
-    "static/css/main.04913dba.chunk.css",
-    "static/js/main.5c2d7977.chunk.js"
+    "static/js/2.8906cbdd.chunk.js",
+    "static/css/main.b2f23716.chunk.css",
+    "static/js/main.f1b15305.chunk.js"
   ]
 }
